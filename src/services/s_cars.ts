@@ -25,31 +25,13 @@ export class CarsService {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        isRented: true
+        isRented: !car.isRented
       })
     });
     const data : Car = await res.json();
     if (!data) return;
     this.updateCar(data);
   }
-
-  async cancelRent(id: number) {
-    const car = this.cars.find(car => car.id === id);
-    if (!car) return;
-    var res = await fetch(`https://retoolapi.dev/m2pZDD/data/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        isRented: false
-      })
-    });
-    const data : Car = await res.json();
-    if (!data) return;
-    this.updateCar(data);
-  }
- 
   async fetchCars() {
     const response : Car[] = await fetch('https://retoolapi.dev/m2pZDD/data');
     const cars = await response.json();

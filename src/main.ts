@@ -2,6 +2,8 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.ts'
+import { Car } from './interface/i_cars.ts';
+import { CarsService } from './services/s_cars.ts';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -21,4 +23,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 `
 
+async function main(){
+  const carsService = new CarsService();
+  await carsService.fetchCars();
+  const cars = carsService.getCars();
+  console.log(cars);
+  await carsService.rentCar(1);
+}
+
+main();
 setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
